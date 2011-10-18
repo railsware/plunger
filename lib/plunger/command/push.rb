@@ -62,7 +62,7 @@ module Plunger
           'description' => description,
           'reviewers'   => reviewers.uniq.join(',')
         }, [
-          'v0.0.1..HEAD'
+          changeset.range
         ])
       end
     end
