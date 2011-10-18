@@ -18,4 +18,4 @@ Synopsis:
 
     plunger configure
 
-It will ask your about required options and store configuration to ~/.gem/plumber
+It will ask your about required options and store configuration to ~/.gem/plunger
