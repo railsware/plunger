@@ -1,3 +1,5 @@
+[[plunger.jpg|float|align=right]]
+
 # Plunger
 
 Plumber is code review tool.
