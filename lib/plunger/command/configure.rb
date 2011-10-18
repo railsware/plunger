@@ -4,12 +4,20 @@ module Plunger
   module Command
     class Configure
       class << self
-        def config_path
-          @config_path ||= File.join(Gem.user_home, '.gem', 'plunger')
+        def command
+          'configure'
+        end
+
+        def description
+          'Configure plunger'
         end
 
         def autorun?
           !File.exists?(config_path)
+        end
+
+        def config_path
+          @config_path ||= File.join(Gem.user_home, '.gem', 'plunger')
         end
       end
 

@@ -12,8 +12,11 @@ module Plunger
 
         o.separator ""
         o.separator "Commands:"
+
         o.separator ""
-        o.separator "push\tPush code diff for review"
+        Command.classes.each do |klass|
+          o.separator "    %-20s %s" % [klass.command, klass.description]
+        end
 
         o.separator ""
         o.separator "Common options:"

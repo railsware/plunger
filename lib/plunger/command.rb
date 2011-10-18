@@ -5,6 +5,10 @@ module Plunger
         %w(push upgrade configure)
       end
 
+      def classes
+        @classes ||= self.names.map { |name| command_class(name) }
+      end
+
       def autorun
         names.each do |name|
           run(name) if command_class(name).autorun?
