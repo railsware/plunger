@@ -1,4 +1,4 @@
-[[https://github.com/railsware/plunger/raw/master/plunger.jpg|float|align=right]]
+<img src="https://github.com/railsware/plunger/raw/master/plunger.jpg" style="float:right" />
 
 # Plunger
 
