@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Plunger::VERSION
   s.authors     = ["Andriy Yanko"]
   s.email       = ["andriy.yanko@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/railsware/plunger"
   s.summary     = %q{Code Review Tool}
   s.description = %q{Ruby Wrapper for Rietveld Code Review, hosted on Google App Engine}
 
