@@ -24,7 +24,8 @@ module Plunger
           ['server',     'Code review server',       'coderev.railsware.com'     ],
           ['domain',     'Google app domain',        'railsware.com'             ],
           ['email',      'Google app email',         'vasya.pupkin@railsware.com'],
-          ['python_bin', 'Path to python v2 binary', 'python'                    ]
+          ['python_bin', 'Path to python v2 binary', 'python'                    ],
+          ['git_bin',    'Path to git binary',       'git'                       ]
         ].each do |args|
           configure(*args)
         end

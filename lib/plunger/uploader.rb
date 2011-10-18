@@ -4,7 +4,7 @@ module Plunger
   class Uploader
 
     def command
-      'python2' 
+      Config.data['python_bin'] || 'python'
     end
 
     def script
