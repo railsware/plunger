@@ -13,59 +13,37 @@ module Plunger
         end
 
         def autorun?
-          !File.exists?(config_path)
-        end
-
-        def config_path
-          @config_path ||= File.join(Gem.user_home, '.gem', 'plunger')
+          !Config.exists?
         end
       end
 
       def run
-        ui.say "Please configure plunger"
+        Command.ui.say "Please configure plunger (enter nothing if you don't want to change option)"
+
         [
-          ['server', 'Code review server', 'coderev.railsware.com'],
-          ['python_bin', 'Path to python v2 binary', 'python']
+          ['server',     'Code review server',       'coderev.railsware.com'     ],
+          ['domain',     'Google app domain',        'railsware.com'             ],
+          ['email',      'Google app email',         'vasya.pupkin@railsware.com'],
+          ['python_bin', 'Path to python v2 binary', 'python'                    ]
         ].each do |args|
-          configure_option(*args)
+          configure(*args)
         end
 
-        save_configuration
-        ui.say "Configuration saved to #{config_path}"
+        Plunger::Config.save
+
+        Command.ui.say "Configuration saved to #{Plunger::Config.path}"
+
+        true
       end
 
       protected
 
-      def ui
-        @ui ||= Gem::ConsoleUI.new
+      def configure(name, description, default)
+        Plunger::Config.data[name] ||= default
+        value = Plunger::Config.data[name]
+        value = Command.ui.ask("#{description} (#{value}):")
+        Plunger::Config.data[name] = value unless value.empty?
       end
-
-      def config_path
-        self.class.config_path
-      end
-
-      def configuration
-        @configuration ||= Gem.configuration.load_file(config_path)
-      end
-
-      def configure_option(name, description, default)
-        configuration[name] ||= default
-        value = configuration[name]
-        value = ui.ask("#{description} (#{value}):")
-        configuration[name] ||= default 
-        configuration[name] = value unless value.empty?
-      end
-
-      def save_configuration
-        dirname = File.dirname(config_path)
-
-        Dir.mkdir(dirname) unless File.exists?(dirname)
-
-        File.open(config_path, 'w') do |f|
-          f.write configuration.to_yaml
-        end
-      end
-
     end
   end
 end

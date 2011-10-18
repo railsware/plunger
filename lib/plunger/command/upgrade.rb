@@ -17,6 +17,7 @@ module Plunger
 
       def run
         p "UPGRADE"
+        true
       end
     end
   end

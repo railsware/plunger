@@ -18,5 +18,6 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
+  s.add_dependency "posix-spawn", "0.3.6"
   s.add_dependency "grit", "2.4.1"
 end

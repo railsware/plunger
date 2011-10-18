@@ -2,7 +2,7 @@
 
 # Plunger
 
-Plumber is code review tool.
+Plunger is code review tool.
 
 Its ruby wrapper for [Rietveld Code Review, hosted on Google App Engine](http://code.google.com/p/rietveld/)
 

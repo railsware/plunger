@@ -22,6 +22,10 @@ module Plunger
       def command_class(name)
         Plunger::Command.const_get(Utils.camelize(name))
       end
+
+      def ui
+        @ui ||= Gem::ConsoleUI.new
+      end
     end
   end
 end

@@ -37,7 +37,7 @@ module Plunger
       end
 
       Command.autorun
-      Command.run(@command)
+      Command.run(@command) or abort
     end
 
   end
