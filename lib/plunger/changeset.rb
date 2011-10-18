@@ -4,7 +4,6 @@ module Plunger
   module Changeset
 
     class << self
-
       def classes
         [Git]
       end
@@ -12,11 +11,7 @@ module Plunger
       def detect_class
         self.classes.find { |klass| klass.detected? }
       end
-
-      def create(*args)
-      end
     end
 
   end
 end
-
