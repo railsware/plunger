@@ -1,5 +1,7 @@
 require "plunger/version"
 
 module Plunger
-  # Your code goes here...
+  autoload :Runner,  'plunger/runner'
+  autoload :Command, 'plunger/command'
+  autoload :Utils,   'plunger/utils'
 end
