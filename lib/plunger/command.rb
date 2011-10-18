@@ -26,6 +26,12 @@ module Plunger
       def ui
         @ui ||= Gem::ConsoleUI.new
       end
+
+      def spawn_result(command)
+        result = POSIX::Spawn.`(command)
+        $?.success? or abort
+        result
+      end
     end
   end
 end
