@@ -33,7 +33,7 @@ module Plunger
 
         changeset.empty? and abort("Changeset #{changeset.range} is empty")
 
-        message     = changeset.title
+        message     = changeset.message
         description = changeset.description
         reviewers   = changeset.author_emails
 
@@ -44,12 +44,12 @@ module Plunger
           reviewers.each { |reviewer| Command.ui.say(reviewer) }
         end
 
-        issue = Command.ui.ask("Issue number (omit to create new issue):")
-
         reviewers +=
           Command.ui.ask("Specify another reviewers (comma separated email addresses):").
           split(',').
           map { |reviewer| reviewer.strip }
+
+        issue = Command.ui.ask("Issue number (omit to create new issue):")
 
         Uploader.new.run({
           'server'      => Config.data['server'],
