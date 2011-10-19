@@ -1,0 +1,24 @@
+---
+- key: python_bin
+  value: python
+  description: Path to python v2 binary
+
+- key: git_bin
+  value: git
+  description: Path to git binary
+
+- key: server
+  value: coderev.railsware.com
+  description: Code review server
+
+- key: domain
+  value: railsware.com
+  description: Google app domain
+
+- key: username
+  value: vasya.pupkin
+  description: Google app username
+
+- key: master_reviewer
+  value: product_manager
+  description: Master reviewer username

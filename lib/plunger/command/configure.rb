@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Plunger
   module Command
     class Configure
@@ -15,17 +17,23 @@ module Plunger
         end
       end
 
+      def config_file
+        File.expand_path('../../../../config/configure_options.yml', __FILE__)
+      end
+
+      def configure_options
+        YAML.load_file(config_file)
+      end
+
       def run
         Command.ui.say "Please configure plunger (enter nothing if you don't want to change option)"
 
-        [
-          ['server',     'Code review server',       'coderev.railsware.com'     ],
-          ['domain',     'Google app domain',        'railsware.com'             ],
-          ['email',      'Google app email',         'vasya.pupkin@railsware.com'],
-          ['python_bin', 'Path to python v2 binary', 'python'                    ],
-          ['git_bin',    'Path to git binary',       'git'                       ]
-        ].each do |args|
-          configure(*args)
+        configure_options.each do |option|
+          configure(
+            option['key'],
+            option['description'],
+            option['value']
+          )
         end
 
         Plunger::Config.save

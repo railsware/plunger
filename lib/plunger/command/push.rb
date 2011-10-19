@@ -41,16 +41,14 @@ module Plunger
           Command.ui.ask(message) == 'y' or abort
         end
 
+        reviewers = normalize_reviewers(Config.data['master_reviewer'])
+
         message     = changeset.message
         description = changeset.description
-        reviewers   = filter_reviewers(changeset.author_emails)
+        reviewers   += filter_reviewers(changeset.author_emails)
 
-        if reviewers.empty?
-          Command.ui.say("No reviewers detected")
-        else
-          Command.ui.say("Found reviewers in the changeset:")
-          reviewers.each { |reviewer| Command.ui.say(reviewer) }
-        end
+        Command.ui.say("Next reviewers will be notified:")
+        reviewers.each { |reviewer| Command.ui.say(reviewer) }
 
         reviewers += normalize_reviewers(
           Command.ui.ask("Specify another reviewers (comma separated email addresses or just names):")
@@ -60,7 +58,7 @@ module Plunger
 
         Uploader.new.run({
           'server'      => Config.data['server'],
-          'email'       => Config.data['email'],
+          'email'       => Config.email,
           'issue'       => issue,
           'send_mail'   => true,
           'message'     => message,

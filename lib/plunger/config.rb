@@ -26,6 +26,10 @@ module Plunger
       def data
         @data ||= self.load
       end
+
+      def email
+        data['username'] << '@' << data['domain']
+      end
     end
   end
 end
