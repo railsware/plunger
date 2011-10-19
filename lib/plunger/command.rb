@@ -1,3 +1,5 @@
+require 'rubygems/user_interaction'
+
 module Plunger
   module Command
     class << self

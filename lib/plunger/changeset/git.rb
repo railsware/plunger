@@ -3,7 +3,7 @@ module Plunger
     class Git
       class << self
         def detected?
-          Dir.exists?('.git')
+          File.exists?('.git')
         end
 
         def command

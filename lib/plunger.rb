@@ -1,5 +1,7 @@
 require "plunger/version"
 
+require 'rubygems'
+
 module Plunger
   autoload :Runner,    'plunger/runner'
   autoload :Changeset, 'plunger/changeset'
