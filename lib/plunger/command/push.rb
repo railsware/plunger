@@ -35,7 +35,7 @@ module Plunger
 
         message     = changeset.message
         description = changeset.description
-        reviewers   = changeset.author_emails
+        reviewers   = filter_reviewers(changeset.author_emails)
 
         if reviewers.empty?
           Command.ui.say("No reviewers detected")
@@ -44,10 +44,9 @@ module Plunger
           reviewers.each { |reviewer| Command.ui.say(reviewer) }
         end
 
-        reviewers +=
-          Command.ui.ask("Specify another reviewers (comma separated email addresses):").
-          split(',').
-          map { |reviewer| reviewer.strip }
+        reviewers += normalize_reviewers(
+          Command.ui.ask("Specify another reviewers (comma separated email addresses or just names):")
+        )
 
         issue = Command.ui.ask("Issue number (omit to create new issue):")
 
@@ -58,10 +57,33 @@ module Plunger
           'send_mail'   => true,
           'message'     => message,
           'description' => description,
-          'reviewers'   => reviewers.uniq.join(',')
+          'reviewers'   => reviewers_to_list(reviewers)
         }, [
           changeset.range
         ])
+      end
+
+      protected
+
+      # select only email with google app domain
+      def filter_reviewers(reviewers)
+        reviewers.map { |reviewer|
+          name, domain = reviewer.split('@', 2)
+          [name, domain].join('@') if domain == Config.data['domain']
+        }.compact.uniq
+      end
+
+      # append google app domain if reviewer is not email (name)
+      def normalize_reviewers(list)
+        list.split(',').map { |reviewer|
+          name, domain = reviewer.strip.split('@', 2)
+          domain ||= Config.data['domain']
+          [name, domain].join('@')
+        }.compact.uniq
+      end
+
+      def reviewers_to_list(reviewers)
+        reviewers.uniq.join(',')
       end
     end
   end
