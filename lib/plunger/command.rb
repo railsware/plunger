@@ -28,7 +28,7 @@ module Plunger
       end
 
       def spawn_result(command)
-        result = POSIX::Spawn.`(command)
+        result = `#{command}`
         $?.success? or abort
         result
       end

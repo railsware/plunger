@@ -1,5 +1,3 @@
-require 'posix/spawn'
-
 module Plunger
   class Uploader
 
@@ -31,7 +29,7 @@ module Plunger
         argvs += diff_options
       end
 
-      POSIX::Spawn.system(command, *argvs)
+      system(command, *argvs)
     end
 
   end

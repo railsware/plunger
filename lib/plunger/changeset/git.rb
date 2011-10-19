@@ -1,5 +1,3 @@
-require 'posix/spawn'
-
 module Plunger
   module Changeset
     class Git
