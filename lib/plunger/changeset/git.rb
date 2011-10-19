@@ -10,6 +10,10 @@ module Plunger
           Config.data['git_bin'] || 'git'
         end
 
+        def sync_repository(remote = 'origin')
+          system("#{self.command} fetch #{remote}")
+        end
+
         def initial_revision
           'origin/master'
         end
@@ -21,10 +25,15 @@ module Plunger
       end
 
       def initialize(initial, final)
-        @range = "#{initial}..#{final}"
+        @initial = initial
+        @final = final
       end
 
-      attr_reader :range
+      attr_reader :initial, :final
+
+      def range
+        @range = "#{initial}..#{final}"
+      end
 
       def repository_name
         @repository_name ||= File.split(File.expand_path('.')).last
@@ -54,6 +63,20 @@ module Plunger
           split("\n").
           map { |email| email.strip }.
           uniq
+      end
+
+      def initial_commits_count
+        @initial_commits_count ||= 
+          Command.spawn_result("#{self.class.command} rev-list #{initial} ^#{final}").split("\n").
+          size.
+          to_i
+      end
+
+      def final_commits_count
+        @final_commits_count ||= 
+          Command.spawn_result("#{self.class.command} rev-list ^#{initial} #{final}").split("\n").
+          size.
+          to_i
       end
     end
   end

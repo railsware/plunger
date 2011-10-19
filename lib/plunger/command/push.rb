@@ -21,6 +21,9 @@ module Plunger
           return false
         end
 
+        Command.ui.say("Synchronizing repository...")
+        changeset_class.sync_repository
+
         revisions = [
           [changeset_class.initial_revision, "initial" ],
           [changeset_class.final_revision,   "final"   ]
@@ -32,6 +35,11 @@ module Plunger
         changeset = changeset_class.new(*revisions)
 
         changeset.empty? and abort("Changeset #{changeset.range} is empty")
+
+        unless changeset.initial_commits_count.zero?
+          message = "Revision '#{changeset.initial}' contains #{changeset.initial_commits_count} commits that are NOT into '#{changeset.final}' revision! Continue (y/n)"
+          Command.ui.ask(message) == 'y' or abort
+        end
 
         message     = changeset.message
         description = changeset.description
