@@ -32,8 +32,8 @@ module Plunger
         @repository_name ||= File.split(File.expand_path('.')).last
       end
 
-      def title
-        @title ||= "#{repository_name}: #{range}"
+      def message
+        @message ||= "[#{repository_name}] #{range}"
       end
 
       def description

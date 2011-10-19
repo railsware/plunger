@@ -33,11 +33,9 @@ module Plunger
 
         changeset.empty? and abort("Changeset #{changeset.range} is empty")
 
-        message = "Plunger: #{changeset.title}"
-
+        message     = changeset.title
         description = changeset.description
-
-        reviewers = changeset.author_emails
+        reviewers   = changeset.author_emails
 
         if reviewers.empty?
           Command.ui.say("No reviewers detected")
