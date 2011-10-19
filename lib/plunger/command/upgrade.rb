@@ -17,7 +17,7 @@ module Plunger
         end
       end
 
-      def run
+      def run(options)
         Command.ui.say("Checking plunger update ...")
 
         req = Gem::Requirement.new(">#{Plunger::VERSION}")

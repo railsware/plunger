@@ -45,6 +45,12 @@ Synopsis:
 
     plunger push
 
+    Push options:
+        --initial REVISION           Initial changeset revision.
+        --final REVISION             Final changeset revision.
+        --issue NUMBER               Issue number to which to add. Defaults to new issue.
+
+
 ## Developer Flow
 
 * Go to your VCS project and optionally switch to your working branch.

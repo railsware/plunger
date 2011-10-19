@@ -13,12 +13,12 @@ module Plunger
 
       def autorun
         names.each do |name|
-          run(name) if command_class(name).autorun?
+          run(name, {}) if command_class(name).autorun?
         end
       end
 
-      def run(name)
-        command_class(name).new.run
+      def run(name, options)
+        command_class(name).new.run(options)
       end
 
       def command_class(name)

@@ -15,7 +15,7 @@ module Plunger
         end
       end
 
-      def run
+      def run(options)
         unless changeset_class = Changeset.detect_class
           Command.ui.say("Can't detect SCM")
           return false
@@ -25,10 +25,10 @@ module Plunger
         changeset_class.sync_repository
 
         revisions = [
-          [changeset_class.initial_revision, "initial" ],
-          [changeset_class.final_revision,   "final"   ]
-        ].map do |default, description|
-          revision = Command.ui.ask("Specify #{description} revision or reference (#{default}):")
+          [changeset_class.initial_revision, :initial ],
+          [changeset_class.final_revision,   :final   ]
+        ].map do |default, type|
+          revision = options[type] || Command.ui.ask("Specify #{type} revision or reference (#{default}):")
           revision.empty? ? default : revision
         end
 
@@ -54,7 +54,16 @@ module Plunger
           Command.ui.ask("Specify another reviewers (comma separated email addresses or just names):")
         )
 
-        issue = Command.ui.ask("Issue number (omit to create new issue):")
+        issue = options[:issue] || Command.ui.ask("Issue number (omit to create new issue):")
+
+        confirmation = "Push changeset '#{message}' "
+        if issue.empty?
+          confirmation << "to NEW issue"
+        else
+          confirmation << "to issue##{issue}"
+        end
+        confirmation << " for code review? (y/n)"
+        Command.ui.ask(confirmation) == 'y' || abort
 
         Uploader.new.run({
           'server'      => Config.data['server'],

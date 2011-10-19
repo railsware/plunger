@@ -25,7 +25,7 @@ module Plunger
         YAML.load_file(config_file)
       end
 
-      def run
+      def run(options)
         Command.ui.say "Please configure plunger (enter nothing if you don't want to change option)"
 
         configure_options.each do |option|
