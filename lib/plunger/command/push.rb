@@ -29,7 +29,7 @@ module Plunger
           [changeset_class.final_revision,   :final   ]
         ].map do |default, type|
           revision = options[type] || Command.ui.ask("Specify #{type} revision or reference (#{default}):")
-          revision.empty? ? default : revision
+          shorter_revision(revision.empty? ? default : revision)
         end
 
         changeset = changeset_class.new(*revisions)
@@ -99,6 +99,10 @@ module Plunger
 
       def reviewers_to_list(reviewers)
         reviewers.uniq.join(',')
+      end
+
+      def shorter_revision(revision)
+        revision =~ /^[0-9a-f]{40}$/ ? revision[0..20] : revision
       end
     end
   end
